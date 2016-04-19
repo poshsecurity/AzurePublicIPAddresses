@@ -9,8 +9,8 @@ $mypath = (Split-Path -Parent -Path $MyInvocation.MyCommand.Definition)
 #find all the ps1 files in the subfolder functions
 Resolve-Path -Path $mypath\functions\*.ps1 | ForEach-Object -Process {
     . $_.ProviderPath
-    $Function = ((Split-Path -path $_.ProviderPath -Leaf).Split('.')[0])
-    Export-ModuleMember -Function $function
+    $Function = ((Split-Path -Path $_.ProviderPath -Leaf).Split('.')[0])
+    Export-ModuleMember -Function $Function
 }
 
 #
