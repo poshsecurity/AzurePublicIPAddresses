@@ -5,21 +5,22 @@ function Get-MicrosoftAzureDatacenterIPRange
             .SYNOPSIS
             Gets the IP ranges associated with Azure regions in CIDR format.
             .DESCRIPTION
-            The Get-AzureRegionPublicIPAddresses cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). A specific region can be specified, otherwise this cmdlet will return all subnets from all regions.
+            The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). A specific region can be specified, otherwise this cmdlet will return all subnets from all regions.
         
             The cmdlet gets the information from the Microsoft Azure Datacenter IP Ranges file, this is updated weekly, and is available for download from: https://www.microsoft.com/en-us/download/details.aspx?id=41653 or
             with the Get-MicrosoftAzureDatacenterIPRangeFile CMDLet.
-        
+            
+            If no region is specified, then all subnets for all regions will be returned. 
             .EXAMPLE
-            C:\PS> <example usage>
-            Explanation of what the example does
+            C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml -AzureRegion 'North Central US'
+            Returns all of the subnext in the 
             .EXAMPLE
-            C:\PS> <example usage>
+            C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml
             Explanation of what the example does
             .INPUTS
             Can take Azure region names from the pipeline.
             .OUTPUTS
-            Outputs an array of subnets in CIDR format.
+            Outputs objects containing each subnet and their region.
     #>
     [CmdletBinding()]
     param(       
@@ -57,6 +58,7 @@ function Get-MicrosoftAzureDatacenterIPRange
     
     begin 
     {
+        # Read the file
         $PublicIPXML = [xml](Get-Content $Path)
     }
     
@@ -105,6 +107,7 @@ function Get-MicrosoftAzureDatacenterIPRange
             {
                 $BackendRegionName = $Region.Name
                 
+                # Translate each region name to something friendly
                 switch ($BackendRegionName)
                 {
                     'EuropeWest'         { $AzureRegion = 'West Europe'         }
@@ -129,6 +132,7 @@ function Get-MicrosoftAzureDatacenterIPRange
                 
                 Write-Verbose -Message "Azure Region Name $AzureRegion"
                 
+                # Create the output object
                 foreach ($Subnet in $Region.IpRange) 
                 {
                     $OutputObject = [PSCustomObject]@{

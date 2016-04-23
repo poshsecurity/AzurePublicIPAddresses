@@ -1,24 +1,21 @@
 function Get-MicrosoftAzureDatacenterIPRangeFile {
     <#
         .SYNOPSIS
-            Short description
+            Downloads the Microsoft Azure Datacenter IP Ranges file
         .DESCRIPTION
-            Long description
+            The Get-MicrosoftAzureDatacenterIPRangeFile cmdlet will download the Microsoft Azure Datacenter IP Ranges file from the Microsoft Downloads site.
+            
+            It should be noted that this file is updated on a weekly basis, and as such you should re-download this file on a regular basis.
+            
+            This cmdlet makes use of Invoke-WebRequest.
         .EXAMPLE
-            C:\PS> <example usage>
-            Explanation of what the example does
-        .INPUTS
-            Inputs (if any)
-        .OUTPUTS
-            Output (if any)
-        .NOTES
-            General notes
+            C:\PS> Get-MicrosoftAzureDatacenterIPRangeFile -Path C:\Temp\AzureRanges.xml
+            Dowloads the Microsoft Azure Datacenter IP Ranges file to C:\Temp\AzureRanges.xml
     #>
     [CmdletBinding()]
     param(
-        #
+        # Path where you want to save the XML file
         [Parameter(Mandatory = $true, Position = 0)]
-        #[ValidateScript({Test-Path -Path $_})]
         [String]
         $Path
     )
