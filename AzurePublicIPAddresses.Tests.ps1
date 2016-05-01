@@ -1,4 +1,6 @@
-﻿Import-Module $PSScriptRoot\AzurePublicIPAddresses.psm1 -Force
+﻿Import-Module $PSScriptRoot\AzurePublicIPAddresses.psm1 -Force -Verbose
+
+Set-Location $PSScriptRoot
 
 Describe 'AzurePublicIPAddresses' {
     Context 'Scrypt Analyzer' {
