@@ -7,31 +7,29 @@ function Get-MicrosoftAzureDatacenterIPRange
             .DESCRIPTION
             The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). A specific region can be specified, otherwise this cmdlet will return all subnets from all regions.
         
-            The cmdlet gets the information from the Microsoft Azure Datacenter IP Ranges file, this is updated weekly, and is available for download from: https://www.microsoft.com/en-us/download/details.aspx?id=41653 or
-            with the Get-MicrosoftAzureDatacenterIPRangeFile CMDLet.
+            The cmdlet gets the information from the Microsoft Azure Datacenter IP Ranges file, this is updated weekly, and is available for download from: https://www.microsoft.com/en-us/download/details.aspx?id=41653.
             
-            If no region is specified, then all subnets for all regions will be returned. 
+            If a path to the above file is not specified, then this CMDLet will download the file and store it in memory. Note, it will only do this once per execution.
+            
+            If no region is specified, then all subnets for all regions will be returned.
+            .EXAMPLE
+            C:\PS> Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Central US'
+            Returns all of the subnets in the North Central US DC, will download the Microsoft Azure Datacenter IP Ranges file into memory
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml -AzureRegion 'North Central US'
-            Returns all of the subnext in the 
+            Returns all of the subnets in the North Central US DC based on the specified file
             .EXAMPLE
-            C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml
-            Explanation of what the example does
+            C:\PS> Get-MicrosoftAzureDatacenterIPRange
+            Returns all of the subnets used by Azure, will download the Microsoft Azure Datacenter IP Ranges file into memory
             .INPUTS
             Can take Azure region names from the pipeline.
             .OUTPUTS
             Outputs objects containing each subnet and their region.
     #>
     [CmdletBinding()]
-    param(       
-        # Path to Microsoft Azure Datacenter IP Ranges file
-        [Parameter(Mandatory = $true, Position = 0)]
-        [ValidateScript({Test-Path -Path $_})]
-        [String]
-        $Path,
-        
+    param(              
         # Azure Datacenter/region
-        [Parameter(Mandatory = $false, Position = 1, ValueFromPipeline = $true)]
+        [Parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $true)]
         [ValidateSet(
                 'West Europe',
                 'East US',
@@ -53,13 +51,30 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'South India'
         )]
         [String]
-        $AzureRegion
+        $AzureRegion,
+        
+        # Path to Microsoft Azure Datacenter IP Ranges file
+        [Parameter(Mandatory = $false, Position = 1)]
+        [ValidateScript({Test-Path -Path $_})]
+        [String]
+        $Path
     )
     
     begin 
     {
-        # Read the file
-        $PublicIPXML = [xml](Get-Content $Path)
+        if ($PSBoundParameters.ContainsKey('path'))
+        {
+            # Read the file
+            $PublicIPXML = [xml](Get-Content $Path)
+        }
+        else 
+        {
+            if ($null -eq $Script:PublicIPXML)
+            {
+                Write-Verbose -Message 'Fetching data file'        
+                $Script:PublicIPXML = Get-MicrosoftAzureDatacenterIPRangeFile
+            }
+        }
     }
     
     process {
