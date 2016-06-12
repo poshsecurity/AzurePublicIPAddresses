@@ -29,16 +29,16 @@ function Get-MicrosoftAzureDatacenterIPRangeFile {
     )
     
     $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=41653'
-    $DownloadPage = Invoke-WebRequest -Uri $MicrosoftDownloadsURL
-    $DownloadLink = ($DownloadPage.Links | Where-Object -FilterScript {$_.InnerText -eq 'Click here'}).href
+    $DownloadPage = Invoke-WebRequest -UseBasicParsing -Uri $MicrosoftDownloadsURL
+    $DownloadLink = ($DownloadPage.Links | Where-Object -FilterScript {$_.outerHTML -match 'Click here' -and $_.href -match '.xml'}).href[0]
         
     if ($PSCmdlet.ParameterSetName -eq 'path')
     {
-        Invoke-WebRequest -Uri $DownloadLink -OutFile $Path
+        Invoke-WebRequest -UseBasicParsing -Uri $DownloadLink -OutFile $Path
     }
     else 
     {
-        $Request = Invoke-WebRequest -Uri $DownloadLink
+        $Request = Invoke-WebRequest -UseBasicParsing -Uri $DownloadLink
         $RequestXML = Select-Xml -Content $Request.toString() -XPath /
         $RequestXML.Node
     }
