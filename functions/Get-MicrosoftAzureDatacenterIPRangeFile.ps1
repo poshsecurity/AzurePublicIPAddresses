@@ -3,7 +3,7 @@ function Get-MicrosoftAzureDatacenterIPRangeFile {
         .SYNOPSIS
         Downloads the Microsoft Azure Datacenter IP Ranges file
         .DESCRIPTION
-        The Get-MicrosoftAzureDatacenterIPRangeFile cmdlet will download the Microsoft Azure Datacenter IP Ranges file from the Microsoft Downloads site.
+        The Get-MicrosoftAzureDatacenterIPRangeFile cmdlet will download the Microsoft Azure Datacenter IP Ranges file from the Microsoft Downloads site (https://www.microsoft.com/en-us/download/details.aspx?id=41653).
         
         It should be noted that this file is updated on a weekly basis, so if you save this file, then you should re-download this file on a regular basis.
         
