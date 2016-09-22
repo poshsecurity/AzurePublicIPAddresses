@@ -1,4 +1,4 @@
-#requires -Version 2
+#requires -Version 2.0
 function Get-MicrosoftAzureDatacenterIPRange  
 {
     <#
@@ -69,7 +69,7 @@ function Get-MicrosoftAzureDatacenterIPRange
         if ($PSBoundParameters.ContainsKey('path'))
         {
             # Read the file
-            $PublicIPXML = [xml](Get-Content $Path)
+            $PublicIPXML = [xml](Get-Content -Path $Path)
         }
         else 
         {
@@ -81,7 +81,8 @@ function Get-MicrosoftAzureDatacenterIPRange
         }
     }
     
-    process {
+    process 
+    {
         # Are we selecting a specific region or returing all subnets?
         if ($PSBoundParameters.ContainsKey('AzureRegion'))
         {
