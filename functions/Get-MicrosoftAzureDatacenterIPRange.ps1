@@ -48,7 +48,11 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'Australia Southeast',
                 'Central India',
                 'West India',
-                'South India'
+                'South India',
+                'Canada Central',
+                'Canada East',
+                'West Central US',
+                'West US 2'
         )]
         [String]
         $AzureRegion,
@@ -102,6 +106,10 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'Central India'       { $BackendRegionName = 'IndiaCentral'       }
                 'West India'          { $BackendRegionName = 'IndiaWest'          }
                 'South India'         { $BackendRegionName = 'IndiaSouth'         }
+                'Canada Central'      { $BackendRegionName = 'CanadaCentral'      }
+                'Canada East'         { $BackendRegionName = 'CanadaEast'         }
+                'West Central US'     { $BackendRegionName = 'USWestCentral'      }
+                'West US 2'           { $BackendRegionName = 'USWest2'            }
             }
             
             Write-Verbose -Message "Backend region $BackendRegionName"
@@ -143,6 +151,10 @@ function Get-MicrosoftAzureDatacenterIPRange
                     'IndiaCentral'       { $AzureRegion = 'Central India'       }
                     'IndiaWest'          { $AzureRegion = 'West India'          }
                     'IndiaSouth'         { $AzureRegion = 'South India'         }
+                    'CanadaCentral'      { $AzureRegion = 'Canada Central'      }
+                    'CanadaEast'         { $AzureRegion = 'Canada East'         }
+                    'USWestCentral'      { $AzureRegion = 'West Central US'     }
+                    'USWest2'            { $AzureRegion = 'West US 2'           }
                 }
                 
                 Write-Verbose -Message "Azure Region Name $AzureRegion"
