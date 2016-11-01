@@ -85,6 +85,34 @@ function Get-MicrosoftAzureDatacenterIPRange
                 $Script:PublicIPXML = Get-MicrosoftAzureDatacenterIPRangeFile
             }
         }
+
+        # Define the region mappings (What we see in the portal to the names in the file)
+        $AzureRegions = @{
+            'West Europe'         = 'EuropeWest'
+            'East US'             = 'USEast'
+            'East US 2'           = 'USEast2'
+            'West US'             = 'USWest'
+            'North Central US'    = 'USNorth'
+            'North Europe'        = 'EuropeNorth'
+            'Central US'          = 'USCentral'
+            'East Asia'           = 'AsiaEast'
+            'Southeast Asia'      = 'AsiaSouthEast'
+            'South Central US'    = 'USSouth'
+            'Japan West'          = 'JapanWest'
+            'Japan East'          = 'JapanEast'
+            'Brazil South'        = 'BrazilSouth'
+            'Australia East'      = 'AustraliaEast'
+            'Australia Southeast' = 'AustraliaSoutheast'
+            'Central India'       = 'IndiaCentral'
+            'West India'          = 'IndiaWest'
+            'South India'         = 'IndiaSouth'
+            'Canada Central'      = 'CanadaCentral'
+            'Canada East'         = 'CanadaEast'
+            'West Central US'     = 'USWestCentral'
+            'West US 2'           = 'USWest2'
+            'UK South'            = 'UKSouth'
+            'UK West'             = 'UKWest'
+        }
     }
     
     process 
@@ -93,34 +121,8 @@ function Get-MicrosoftAzureDatacenterIPRange
         if ($PSBoundParameters.ContainsKey('AzureRegion'))
         {
             # Translate the friendly region name to the backend names
-            switch ($AzureRegion)
-            {
-                'West Europe'         { $BackendRegionName = 'EuropeWest'         }
-                'East US'             { $BackendRegionName = 'USEast'             }
-                'East US 2'           { $BackendRegionName = 'USEast2'            }
-                'West US'             { $BackendRegionName = 'USWest'             }
-                'North Central US'    { $BackendRegionName = 'USNorth'            }
-                'North Europe'        { $BackendRegionName = 'EuropeNorth'        }
-                'Central US'          { $BackendRegionName = 'USCentral'          }
-                'East Asia'           { $BackendRegionName = 'AsiaEast'           }
-                'Southeast Asia'      { $BackendRegionName = 'AsiaSouthEast'      }
-                'South Central US'    { $BackendRegionName = 'USSouth'            }
-                'Japan West'          { $BackendRegionName = 'JapanWest'          }
-                'Japan East'          { $BackendRegionName = 'JapanEast'          }
-                'Brazil South'        { $BackendRegionName = 'BrazilSouth'        }
-                'Australia East'      { $BackendRegionName = 'AustraliaEast'      }
-                'Australia Southeast' { $BackendRegionName = 'AustraliaSoutheast' }
-                'Central India'       { $BackendRegionName = 'IndiaCentral'       }
-                'West India'          { $BackendRegionName = 'IndiaWest'          }
-                'South India'         { $BackendRegionName = 'IndiaSouth'         }
-                'Canada Central'      { $BackendRegionName = 'CanadaCentral'      }
-                'Canada East'         { $BackendRegionName = 'CanadaEast'         }
-                'West Central US'     { $BackendRegionName = 'USWestCentral'      }
-                'West US 2'           { $BackendRegionName = 'USWest2'            }
-                'UK South'            { $BackendRegionName = 'UKSouth'            }
-                'UK West'             { $BackendRegionName = 'UKWest'             }
-            }
-            
+            $BackendRegionName = $AzureRegions[$AzureRegion]
+                        
             Write-Verbose -Message "Backend region $BackendRegionName"
             $Subnets = ($PublicIPXML.AzurePublicIpAddresses.Region.where({$_.name -eq $BackendRegionName})).iprange.subnet
             foreach ($Subnet in $Subnets) 
@@ -135,39 +137,14 @@ function Get-MicrosoftAzureDatacenterIPRange
         else 
         {
             $Regions = $PublicIPXML.AzurePublicIpAddresses.Region
+
             foreach ($Region in $Regions) 
             {
                 $BackendRegionName = $Region.Name
                 
                 # Translate each region name to something friendly
-                switch ($BackendRegionName)
-                {
-                    'EuropeWest'         { $AzureRegion = 'West Europe'         }
-                    'USEast'             { $AzureRegion = 'East US'             }
-                    'USEast2'            { $AzureRegion = 'East US 2'           }
-                    'USWest'             { $AzureRegion = 'West US'             }
-                    'USNorth'            { $AzureRegion = 'North Central US'    }
-                    'EuropeNorth'        { $AzureRegion = 'North Europe'        }
-                    'USCentral'          { $AzureRegion = 'Central US'          }
-                    'AsiaEast'           { $AzureRegion = 'East Asia'           }
-                    'AsiaSouthEast'      { $AzureRegion = 'Southeast Asia'      }
-                    'USSouth'            { $AzureRegion = 'South Central US'    }
-                    'JapanWest'          { $AzureRegion = 'Japan West'          }
-                    'JapanEast'          { $AzureRegion = 'Japan East'          }
-                    'BrazilSouth'        { $AzureRegion = 'Brazil South'        }
-                    'AustraliaEast'      { $AzureRegion = 'Australia East'      }
-                    'AustraliaSoutheast' { $AzureRegion = 'Australia Southeast' }
-                    'IndiaCentral'       { $AzureRegion = 'Central India'       }
-                    'IndiaWest'          { $AzureRegion = 'West India'          }
-                    'IndiaSouth'         { $AzureRegion = 'South India'         }
-                    'CanadaCentral'      { $AzureRegion = 'Canada Central'      }
-                    'CanadaEast'         { $AzureRegion = 'Canada East'         }
-                    'USWestCentral'      { $AzureRegion = 'West Central US'     }
-                    'USWest2'            { $AzureRegion = 'West US 2'           }
-                    'UKSouth'            { $AzureRegion = 'UK South'            }
-                    'UKWest'             { $AzureRegion = 'UK West'             }
-                }
-                
+                $AzureRegion = $AzureRegions.GetEnumerator().Where({$_.Value -eq $BackendRegionName}).Name
+                                
                 Write-Verbose -Message "Azure Region Name $AzureRegion"
                 
                 # Create the output object
