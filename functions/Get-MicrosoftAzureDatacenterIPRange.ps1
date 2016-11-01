@@ -1,4 +1,4 @@
-#requires -Version 2.0
+#requires -Version 4.0
 function Get-MicrosoftAzureDatacenterIPRange  
 {
     <#
@@ -27,14 +27,17 @@ function Get-MicrosoftAzureDatacenterIPRange
             Outputs objects containing each subnet and their region.
     #>
     [CmdletBinding()]
+    [OutputType([PSCustomObject])]
     param(              
         # Azure Datacenter/region
-        [Parameter(Mandatory = $false, Position = 0, ValueFromPipeline = $true)]
+        [Parameter(Mandatory         = $false, 
+                   Position          = 0, 
+                   ValueFromPipeline = $true)]
         [ValidateSet(
                 'West Europe',
                 'East US',
                 'East US 2',
-                'US West',
+                'West US',
                 'North Central US',
                 'North Europe',
                 'Central US',
@@ -52,13 +55,16 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'Canada Central',
                 'Canada East',
                 'West Central US',
-                'West US 2'
+                'West US 2',
+                'UK South',
+                'UK West'
         )]
         [String]
         $AzureRegion,
         
         # Path to Microsoft Azure Datacenter IP Ranges file
-        [Parameter(Mandatory = $false, Position = 1)]
+        [Parameter(Mandatory = $false, 
+                   Position  = 1)]
         [ValidateScript({Test-Path -Path $_})]
         [String]
         $Path
@@ -92,7 +98,7 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'West Europe'         { $BackendRegionName = 'EuropeWest'         }
                 'East US'             { $BackendRegionName = 'USEast'             }
                 'East US 2'           { $BackendRegionName = 'USEast2'            }
-                'US West'             { $BackendRegionName = 'USWest'             }
+                'West US'             { $BackendRegionName = 'USWest'             }
                 'North Central US'    { $BackendRegionName = 'USNorth'            }
                 'North Europe'        { $BackendRegionName = 'EuropeNorth'        }
                 'Central US'          { $BackendRegionName = 'USCentral'          }
@@ -111,10 +117,12 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'Canada East'         { $BackendRegionName = 'CanadaEast'         }
                 'West Central US'     { $BackendRegionName = 'USWestCentral'      }
                 'West US 2'           { $BackendRegionName = 'USWest2'            }
+                'UK South'            { $BackendRegionName = 'UKSouth'            }
+                'UK West'             { $BackendRegionName = 'UKWest'             }
             }
             
             Write-Verbose -Message "Backend region $BackendRegionName"
-            $Subnets = ($PublicIPXML.AzurePublicIpAddresses.Region | Where-Object -FilterScript {$_.name -eq $BackendRegionName}).iprange.subnet
+            $Subnets = ($PublicIPXML.AzurePublicIpAddresses.Region.where({$_.name -eq $BackendRegionName})).iprange.subnet
             foreach ($Subnet in $Subnets) 
             {
                 $OutputObject = [PSCustomObject]@{
@@ -137,7 +145,7 @@ function Get-MicrosoftAzureDatacenterIPRange
                     'EuropeWest'         { $AzureRegion = 'West Europe'         }
                     'USEast'             { $AzureRegion = 'East US'             }
                     'USEast2'            { $AzureRegion = 'East US 2'           }
-                    'USWest'             { $AzureRegion = 'US West'             }
+                    'USWest'             { $AzureRegion = 'West US'             }
                     'USNorth'            { $AzureRegion = 'North Central US'    }
                     'EuropeNorth'        { $AzureRegion = 'North Europe'        }
                     'USCentral'          { $AzureRegion = 'Central US'          }
@@ -156,6 +164,8 @@ function Get-MicrosoftAzureDatacenterIPRange
                     'CanadaEast'         { $AzureRegion = 'Canada East'         }
                     'USWestCentral'      { $AzureRegion = 'West Central US'     }
                     'USWest2'            { $AzureRegion = 'West US 2'           }
+                    'UKSouth'            { $AzureRegion = 'UK South'            }
+                    'UKWest'             { $AzureRegion = 'UK West'             }
                 }
                 
                 Write-Verbose -Message "Azure Region Name $AzureRegion"

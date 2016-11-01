@@ -24,8 +24,8 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US 2' | Should not be $null
         }
 
-        It 'returns output for US West' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'US West' | Should not be $null
+        It 'returns output for West US' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West US' | Should not be $null
         }
 
         It 'returns output for North Central US' {
@@ -100,6 +100,15 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West US 2' | Should not be $null
         }
 
+        It 'returns output for UK South' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK South' | Should not be $null
+        }
+
+        <# Currently this region appears to be missing from the file (is available in Azure though)
+        It 'returns output for UK West' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK West' | Should not be $null
+        }
+        #>
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }
