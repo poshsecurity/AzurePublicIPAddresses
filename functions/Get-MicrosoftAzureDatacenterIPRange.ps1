@@ -59,8 +59,8 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'UK South',
                 'UK West'
         )]
-        [String]
-        $AzureRegion,
+        [String[]]
+        $AzureRegions,
         
         # Path to Microsoft Azure Datacenter IP Ranges file
         [Parameter(Mandatory = $false, 
@@ -87,7 +87,7 @@ function Get-MicrosoftAzureDatacenterIPRange
         }
 
         # Define the region mappings (What we see in the portal to the names in the file)
-        $AzureRegions = @{
+        $AzureRegionsMapping = @{
             'West Europe'         = 'EuropeWest'
             'East US'             = 'USEast'
             'East US 2'           = 'USEast2'
@@ -118,20 +118,22 @@ function Get-MicrosoftAzureDatacenterIPRange
     process 
     {
         # Are we selecting a specific region or returing all subnets?
-        if ($PSBoundParameters.ContainsKey('AzureRegion'))
+        if ($PSBoundParameters.ContainsKey('AzureRegions'))
         {
-            # Translate the friendly region name to the backend names
-            $BackendRegionName = $AzureRegions[$AzureRegion]
-                        
-            Write-Verbose -Message "Backend region $BackendRegionName"
-            $Subnets = ($PublicIPXML.AzurePublicIpAddresses.Region.where({$_.name -eq $BackendRegionName})).iprange.subnet
-            foreach ($Subnet in $Subnets) 
-            {
-                $OutputObject = [PSCustomObject]@{
-                    Region = $AzureRegion
-                    Subnet = $Subnet
+                foreach ($AzureRegion in $AzureRegions) {
+                # Translate the friendly region name to the backend names
+                $BackendRegionName = $AzureRegionsMapping[$AzureRegion]
+
+                Write-Verbose -Message "Backend region $BackendRegionName"
+                $Subnets = ($PublicIPXML.AzurePublicIpAddresses.Region.where({$_.name -eq $BackendRegionName})).iprange.subnet
+                foreach ($Subnet in $Subnets) 
+                {
+                    $OutputObject = [PSCustomObject]@{
+                        Region = $AzureRegion
+                        Subnet = $Subnet
+                    }
+                    Write-Output -InputObject $OutputObject
                 }
-                Write-Output -InputObject $OutputObject
             }
         }
         else 
@@ -143,7 +145,7 @@ function Get-MicrosoftAzureDatacenterIPRange
                 $BackendRegionName = $Region.Name
                 
                 # Translate each region name to something friendly
-                $AzureRegion = $AzureRegions.GetEnumerator().Where({$_.Value -eq $BackendRegionName}).Name
+                $AzureRegion = $AzureRegionsMapping.GetEnumerator().Where({$_.Value -eq $BackendRegionName}).Name
                                 
                 Write-Verbose -Message "Azure Region Name $AzureRegion"
                 
