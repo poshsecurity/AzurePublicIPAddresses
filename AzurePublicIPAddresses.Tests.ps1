@@ -1,4 +1,4 @@
-﻿Import-Module $PSScriptRoot\AzurePublicIPAddresses.psm1 -Force -Verbose
+﻿Import-Module $PSScriptRoot\AzurePublicIPAddresses.psm1 -Force
 
 
 Describe 'AzurePublicIPAddresses' {
@@ -109,6 +109,15 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK West' | Should not be $null
         }
         #>
+
+        It 'returns output for China North' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China North' | Should not be $null
+        }
+
+        It 'returns output for China East' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China East' | Should not be $null
+        }
+
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }

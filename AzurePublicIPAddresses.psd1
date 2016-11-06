@@ -12,7 +12,7 @@
     RootModule = 'AzurePublicIPAddresses.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.7'
+    ModuleVersion = '0.8'
 
     # ID used to uniquely identify this module
     GUID = 'c8dbd0e3-529d-4bba-976a-5cd7560c70c0'
@@ -75,7 +75,7 @@
     VariablesToExport = ''
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport = ''
+    AliasesToExport = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -92,7 +92,7 @@
         PSData = @{
 
             # Tags applied to this module. These help with module discovery in online galleries.
-            Tags = @('azure', 'ip', 'networking', 'subnets', 'cidr', 'regions', 'downloads')
+            Tags = @('azure', 'ip', 'networking', 'subnets', 'cidr', 'regions', 'downloads', 'download', 'subnet', 'network')
 
             # A URL to the license for this module.
             LicenseUri = 'https://github.com/poshsecurity/AzurePublicIPAddresses/blob/master/LICENSE'
@@ -104,7 +104,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Support for new Azure Regions (UK South and West)'
+            ReleaseNotes = 'Support for China Azure Regions (China North and China East)'
 
         } # End of PSData hashtable
 
