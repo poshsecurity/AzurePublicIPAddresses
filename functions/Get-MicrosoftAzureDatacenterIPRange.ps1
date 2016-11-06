@@ -85,7 +85,17 @@ function Get-MicrosoftAzureDatacenterIPRange
             # Read the file
             $PublicIPXML = [xml](Get-Content -Path $Path)
 
-            #TODO: need to validate if they have the right file!?
+            #Display warning stating that some regions may not be available
+            Write-Warning -Message 'Using -Path may result in some regions being unavailable and returning no values.'
+            if ($publicipxml.AzurePublicIpAddresses.Region.Name.Contains('chinanorth'))
+            {
+                Write-Warning -Message 'The file specified contains only Azure China regions (China North and China East), only these regions will return results'
+            }
+            else
+            {
+                Write-Warning -Message 'The file specified does not contain Azure China regions (China North and China East), no results will be returned for these regions'
+            }
+
         }
         else 
         {
