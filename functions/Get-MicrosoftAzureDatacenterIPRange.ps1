@@ -67,7 +67,7 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'China North',
                 'China East'
         )]
-        [String]
+        [String[]]
         $AzureRegion,
         
         # Path to Microsoft Azure Datacenter IP Ranges file
@@ -147,19 +147,22 @@ function Get-MicrosoftAzureDatacenterIPRange
         # Are we selecting a specific region or returing all subnets?
         if ($PSBoundParameters.ContainsKey('AzureRegion'))
         {
-            # Translate the friendly region name to the backend names
-            $BackendRegionName = $AzureRegions[$AzureRegion]
-                        
-            Write-Verbose -Message "Backend region $BackendRegionName"
-            $Subnets = ($Regions.where({$_.name -eq $BackendRegionName})).iprange.subnet
-            foreach ($Subnet in $Subnets) 
+            foreach ($Region in $AzureRegion)
             {
-                $OutputObject = [PSCustomObject]@{
-                    Region = $AzureRegion
-                    Subnet = $Subnet
+                # Translate the friendly region name to the backend names
+                $BackendRegionName = $AzureRegions[$Region]
+                            
+                Write-Verbose -Message "Backend region $BackendRegionName"
+                $Subnets = ($Regions.where({$_.name -eq $BackendRegionName})).iprange.subnet
+                foreach ($Subnet in $Subnets) 
+                {
+                    $OutputObject = [PSCustomObject]@{
+                        Region = $Region
+                        Subnet = $Subnet
+                    }
+                    Write-Output -InputObject $OutputObject
                 }
-                Write-Output -InputObject $OutputObject
-            }
+            }            
         }
         else 
         {
