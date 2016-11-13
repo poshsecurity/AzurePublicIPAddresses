@@ -4,12 +4,17 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
 {
     <#
             .SYNOPSIS
-            Downloads the Microsoft Azure Datacenter IP Ranges file
+            Downloads either the Microsoft Azure Datacenter IP Ranges file, or the Windows Azure Datacenter IP Ranges in China file. The file can be stored in memory or to the file system.
             
-            .DESCRIPTION
-            The Get-MicrosoftAzureDatacenterIPRangeFile cmdlet will download the Microsoft Azure Datacenter IP Ranges file from the Microsoft Downloads site (https://www.microsoft.com/en-us/download/details.aspx?id=41653).
-        
-            It should be noted that this file is updated on a weekly basis, so if you save this file, then you should re-download this file on a regular basis.
+            .DESCRIPTION           
+            This CMDLet will download either of the two files:
+                Microsoft Azure Datacenter IP Ranges (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
+                Windows Azure Datacenter IP Ranges in China (https://www.microsoft.com/en-us/download/details.aspx?id=42064)
+
+            If the -ChinaRegion parameter is not specified, then Microsoft Azure Datacenter IP Ranges is downloaded.
+            If the -ChinaRegion parameter is specified, then Windows Azure Datacenter IP Ranges in China is downloaded.
+       
+            It should be noted that this file is updated on a weekly basis, so if you save these file, then you should re-download them on a regular basis.
         
             This cmdlet makes use of Invoke-WebRequest.
             
@@ -53,10 +58,12 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
 
     if ($PSBoundParameters.ContainsKey('ChinaRegion') -and $ChinaRegion)
     {   
+        Write-Verbose -Message 'Downloading... Windows Azure Datacenter IP Ranges in China'
         $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=42064'
     }
     else
     {
+        Write-Verbose -Message 'Downloading... Microsoft Azure Datacenter IP Ranges'
         $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=41653'
     }
         
@@ -65,10 +72,12 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
         
     if ($PSCmdlet.ParameterSetName -eq 'path')
     {
+        Write-Verbose -Message ('Saving file to {0}' -f $Path)
         Invoke-WebRequest -UseBasicParsing -Uri $DownloadLink -OutFile $Path
     }
     else 
     {
+        Write-Verbose -Message 'Downloading and creating XML object'
         $Request = Invoke-WebRequest -UseBasicParsing -Uri $DownloadLink
         $RequestXML = Select-Xml -Content $Request.toString() -XPath /
         $RequestXML.Node
