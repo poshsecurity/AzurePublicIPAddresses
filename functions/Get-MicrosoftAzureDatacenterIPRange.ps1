@@ -80,13 +80,15 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'China North',
                 'China East'
         )]
+        [ValidateNotNullOrEmpty()]
         [String[]]
         $AzureRegion,
         
         # Path to Microsoft Azure Datacenter IP Ranges file
         [Parameter(Mandatory = $false, 
                    Position  = 1)]
-        [ValidateScript({Test-Path -Path $_})]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
         [String]
         $Path
     )

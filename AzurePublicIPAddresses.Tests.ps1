@@ -11,6 +11,62 @@ Describe 'AzurePublicIPAddresses' {
         }
     }
 
+    Context 'Get-MicrosoftAzureDatacenterIPRange Parameter validation' {
+        It 'throws an error for an invalid region is specified' {
+            {Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'nomansland'} | should throw
+        }
+
+        It 'throws an error for $null is specified for a region' {
+            {Get-MicrosoftAzureDatacenterIPRange -AzureRegion $null} | should throw
+        }
+
+        It 'throws an error for an empty string is specified for a region' {
+            {Get-MicrosoftAzureDatacenterIPRange -AzureRegion ''} | should throw
+        }
+
+        It 'throws an error for @() is specified for a region' {
+            {Get-MicrosoftAzureDatacenterIPRange -AzureRegion @()} | should throw
+        }
+
+        It 'throws an error for @() is specified for a region 2' {
+            {Get-MicrosoftAzureDatacenterIPRange -AzureRegion @('')} | should throw
+        }
+
+        It 'throws an error for $null is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRange -Path $null} | should throw
+        }
+
+        It 'throws an error for an empty string is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRange -Path ''} | should throw
+        }
+
+        It 'throws an error for an invalid path is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRange -Path 'C:\Windowsthisdoesnotexit\file.xml'} | should throw
+        }
+
+        It 'throws an error for an folder path is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRange -Path 'C:\Windows'} | should throw
+        }
+    }
+
+    Context 'Get-MicrosoftAzureDatacenterIPRangeFile Parameter validation' {
+        It 'throws an error for $null is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRangeFile -Path $null} | should throw
+        }
+
+        It 'throws an error for an empty string is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRangeFile -Path ''} | should throw
+        }
+
+        It 'throws an error for an invalid path is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRangeFile -Path 'C:\Windowsthisdoesnotexit\file.xml'} | should throw
+        }
+
+        It 'throws an error for an folder path is specified for a path' {
+            {Get-MicrosoftAzureDatacenterIPRangeFile -Path 'C:\Windows'} | should throw
+        }
+    }
+
     Context 'Get-MicrosoftAzureDatacenterIPRange outputs results for each supported Azure region' {
         It 'returns output for West Europe' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West Europe' | Should not be $null

@@ -46,6 +46,8 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
         [Parameter(Mandatory        = $false,
                    ParameterSetName = 'path',
                    Position         = 0)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateScript({Test-Path -Path (Split-Path -Path $_ -Parent) -PathType Container})]
         [String]
         $Path,
 
