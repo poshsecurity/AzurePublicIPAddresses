@@ -6,21 +6,34 @@ function Get-MicrosoftAzureDatacenterIPRange
             Gets the IP ranges associated with Azure regions in CIDR format.
 
             .DESCRIPTION
-            The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). A specific region can be specified, otherwise this cmdlet will return all subnets from all regions.
-        
-            The cmdlet gets the information from the Microsoft Azure Datacenter IP Ranges file, this is updated weekly, and is available for download from: https://www.microsoft.com/en-us/download/details.aspx?id=41653.
+            The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). You can get the ranges for a specific region, or get all subnets for all regions. 
             
-            If a path to the above file is not specified, then this CMDLet will download the file and store it in memory. Note, it will only do this once per execution.
-            
-            If no region is specified, then all subnets for all regions will be returned.
+            There are two files that contain all the information that this CMDLet uses:
+                Microsoft Azure Datacenter IP Ranges file (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
+                Windows Azure Datacenter IP Ranges in China (https://www.microsoft.com/en-us/download/details.aspx?id=42064)
+
+            Both of these files are updated each week.
+
+            If the -path parameter is omitted, then the CMDLet will download both files and store them in memory (it doesn't save them to disk). The CMDLet will not download the file upon each execution,
+            as it checks to see if the file has already been stored in memory.
+
+            If you specify -path, the CMDLet will generate warnings that not all regions will be available. This is by design. I will look at handling both files saved to the file system in a later release.
             
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Central US'
-            Returns all of the subnets in the North Central US DC, will download the Microsoft Azure Datacenter IP Ranges file into memory
+            Returns all of the subnets in the North Central US regions, will download the Microsoft Azure Datacenter IP Ranges file into memory
+
+            .EXAMPLE
+            C:\PS> Get-MicrosoftAzureDatacenterIPRange -AzureRegion @('North Central US', 'West India')
+            Returns all of the subnets in the North Central US and West India regions, will download the Microsoft Azure Datacenter IP Ranges file into memory
+
+            .EXAMPLE
+            C:\PS> @('Japan West', 'Japan East') | Get-MicrosoftAzureDatacenterIPRange
+            Returns all of the subnets in the Japan West and East regions, will download the Microsoft Azure Datacenter IP Ranges file into memory
             
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml -AzureRegion 'North Central US'
-            Returns all of the subnets in the North Central US DC based on the specified file
+            Returns all of the subnets in the North Central US region based on the specified file
             
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange
@@ -147,11 +160,12 @@ function Get-MicrosoftAzureDatacenterIPRange
         # Are we selecting a specific region or returing all subnets?
         if ($PSBoundParameters.ContainsKey('AzureRegion'))
         {
+            #We need to process this as we may have one or many regions specified in $AzureRegion
             foreach ($Region in $AzureRegion)
             {
                 # Translate the friendly region name to the backend names
                 $BackendRegionName = $AzureRegions[$Region]
-                            
+
                 Write-Verbose -Message "Backend region $BackendRegionName"
                 $Subnets = ($Regions.where({$_.name -eq $BackendRegionName})).iprange.subnet
                 foreach ($Subnet in $Subnets) 
