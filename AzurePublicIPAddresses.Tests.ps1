@@ -160,11 +160,9 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK South' | Should not be $null
         }
 
-        <# Currently this region appears to be missing from the file (is available in Azure though)
         It 'returns output for UK West' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK West' | Should not be $null
         }
-        #>
 
         It 'returns output for China North' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China North' | Should not be $null
