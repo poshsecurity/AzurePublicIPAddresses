@@ -172,6 +172,14 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China East' | Should not be $null
         }
 
+        It 'returns output for Central US EUAP' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Central US EUAP' | Should not be $null
+        }
+
+        It 'returns output for East US 2 EUAP' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US 2 EUAP' | Should not be $null
+        }
+
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }

@@ -78,7 +78,9 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'UK South',
                 'UK West',
                 'China North',
-                'China East'
+                'China East',
+                'Central US EUAP',
+                'East US 2 EUAP'
         )]
         [ValidateNotNullOrEmpty()]
         [String[]]
@@ -152,6 +154,8 @@ function Get-MicrosoftAzureDatacenterIPRange
             'UK West'             = 'UKWest'
             'China North'         = 'chinanorth'
             'China East'          = 'chinaeast'
+            'Central US EUAP'     = 'uscentraleuap'
+            'East US 2 EUAP'      = 'useast2euap'
         }
 
         $Regions = $PublicIPXML.AzurePublicIpAddresses.Region + $PublicIPChinaXML.AzurePublicIpAddresses.Region
