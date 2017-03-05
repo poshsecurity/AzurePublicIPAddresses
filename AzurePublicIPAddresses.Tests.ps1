@@ -180,6 +180,14 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US 2 EUAP' | Should not be $null
         }
 
+        It 'returns output for Korea South' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South' | Should not be $null
+        }
+
+        It 'returns output for Korea Central' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea Central' | Should not be $null
+        }
+
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }

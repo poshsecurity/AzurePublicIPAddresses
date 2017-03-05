@@ -12,7 +12,7 @@
     RootModule = 'AzurePublicIPAddresses.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.8.2'
+    ModuleVersion = '0.8.3'
 
     # ID used to uniquely identify this module
     GUID = 'c8dbd0e3-529d-4bba-976a-5cd7560c70c0'
@@ -104,7 +104,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Support for new US Central and US EAST2 EUAP regions'
+            ReleaseNotes = 'Support for new Korea (South & Central) regions'
 
         } # End of PSData hashtable
 
