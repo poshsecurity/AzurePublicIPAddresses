@@ -12,7 +12,7 @@
     RootModule = 'AzurePublicIPAddresses.psm1'
 
     # Version number of this module.
-    ModuleVersion = '0.8.3'
+    ModuleVersion = '0.9'
 
     # ID used to uniquely identify this module
     GUID = 'c8dbd0e3-529d-4bba-976a-5cd7560c70c0'
@@ -24,7 +24,7 @@
     CompanyName = 'Posh Security <poshsecurity.com>'
 
     # Copyright statement for this module
-    Copyright = 'Copyright (c) 2016 Posh Security (poshsecurity.com)'
+    Copyright = 'Copyright (c) 2018 Posh Security (poshsecurity.com)'
 
     # Description of the functionality provided by this module
     Description = 'Gets the IP ranges associated with Azure regions in CIDR format'
@@ -104,7 +104,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Support for new Korea (South & Central) regions'
+            ReleaseNotes = 'Support for France and Germany regions'
 
         } # End of PSData hashtable
 
