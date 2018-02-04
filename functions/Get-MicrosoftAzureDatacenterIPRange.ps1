@@ -8,11 +8,12 @@ function Get-MicrosoftAzureDatacenterIPRange
             .DESCRIPTION
             The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). You can get the ranges for a specific region, or get all subnets for all regions. 
             
-            There are two files that contain all the information that this CMDLet uses:
+            There are three files that contain all the information that this CMDLet uses:
                 Microsoft Azure Datacenter IP Ranges file (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
                 Windows Azure Datacenter IP Ranges in China (https://www.microsoft.com/en-us/download/details.aspx?id=42064)
+                Windows Azure Datacenter IP Ranges in Germany (https://www.microsoft.com/en-us/download/details.aspx?id=54770)
 
-            Both of these files are updated each week.
+            These files are updated each week.
 
             If the -path parameter is omitted, then the CMDLet will download both files and store them in memory (it doesn't save them to disk). The CMDLet will not download the file upon each execution,
             as it checks to see if the file has already been stored in memory.
@@ -82,7 +83,11 @@ function Get-MicrosoftAzureDatacenterIPRange
                 'Central US EUAP',
                 'East US 2 EUAP',
                 'Korea South',
-                'Korea Central'
+                'Korea Central',
+                'France Central',
+                'France South',
+                'Germany Central',
+                'Germany Northeast'
         )]
         [ValidateNotNullOrEmpty()]
         [String[]]
@@ -103,28 +108,23 @@ function Get-MicrosoftAzureDatacenterIPRange
         {
             # Read the file
             $PublicIPXML = [xml](Get-Content -Path $Path)
+            $Script:Regions = $PublicIPXML.AzurePublicIpAddresses.Region
 
-            #Display warning stating that some regions may not be available
+            # Display warning stating that some regions may not be available
             Write-Warning -Message 'Using -Path may result in some regions being unavailable and returning no values.'
-            if ($publicipxml.AzurePublicIpAddresses.Region.Name.Contains('chinanorth'))
-            {
-                Write-Warning -Message 'The file specified contains only Azure China regions (China North and China East), only these regions will return results'
-            }
-            else
-            {
-                Write-Warning -Message 'The file specified does not contain Azure China regions (China North and China East), no results will be returned for these regions'
-            }
-
         }
         else 
         {
-            if ($null -eq $Script:PublicIPXML)
+            if ($null -eq $Script:Regions)
             {
-                Write-Verbose -Message 'Fetching region data file'        
-                $Script:PublicIPXML = Get-MicrosoftAzureDatacenterIPRangeFile
+                Write-Verbose -Message 'Fetching the standard region data file'        
+                $Script:Regions = (Get-MicrosoftAzureDatacenterIPRangeFile).AzurePublicIpAddresses.Region
 
-                Write-Verbose -Message 'Fetching the china region file'
-                $Script:PublicIPChinaXML = Get-MicrosoftAzureDatacenterIPRangeFile -ChinaRegion
+                Write-Verbose -Message 'Fetching the China region file'
+                $Script:Regions += (Get-MicrosoftAzureDatacenterIPRangeFile -Region 'China').AzurePublicIpAddresses.Region
+
+                Write-Verbose -Message 'Fetching the Germany region file'
+                $Script:Regions += (Get-MicrosoftAzureDatacenterIPRangeFile -Region 'Germany').AzurePublicIpAddresses.Region
             }
         }
 
@@ -160,9 +160,11 @@ function Get-MicrosoftAzureDatacenterIPRange
             'East US 2 EUAP'      = 'useast2euap'
             'Korea South'         = 'koreasouth'
             'Korea Central'       = 'koreacentral'
+            'France Central'      = "francec"
+            'France South'        = "frances"
+            'Germany Central'     = "germanycentral"
+            'Germany Northeast'   = "germanynortheast"
         }
-
-        $Regions = $PublicIPXML.AzurePublicIpAddresses.Region + $PublicIPChinaXML.AzurePublicIpAddresses.Region
     }
     
     process 

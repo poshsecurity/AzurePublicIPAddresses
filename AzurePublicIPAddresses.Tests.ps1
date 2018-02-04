@@ -188,6 +188,22 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea Central' | Should not be $null
         }
 
+        It 'returns output for France South' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'France South' | Should not be $null
+        }
+
+        It 'returns output for France Central' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'France Central' | Should not be $null
+        }
+
+        It 'returns output for Germany Central' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Germany Central' | Should not be $null
+        }
+
+        It 'returns output for Germany Northeast' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Germany Northeast' | Should not be $null
+        }
+
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }
