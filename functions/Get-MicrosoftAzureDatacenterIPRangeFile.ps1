@@ -7,12 +7,12 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
             Downloads either the Microsoft Azure Datacenter IP Ranges file, or the Windows Azure Datacenter IP Ranges in China file. The file can be stored in memory or to the file system.
             
             .DESCRIPTION           
-            This CMDLet will download either of the two files:
-                Microsoft Azure Datacenter IP Ranges (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
+            This CMDLet will download one of three files:
+                Microsoft Azure Datacenter IP Ranges file (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
                 Windows Azure Datacenter IP Ranges in China (https://www.microsoft.com/en-us/download/details.aspx?id=42064)
+                Windows Azure Datacenter IP Ranges in Germany (https://www.microsoft.com/en-us/download/details.aspx?id=54770)
 
-            If the -ChinaRegion parameter is not specified, then Microsoft Azure Datacenter IP Ranges is downloaded.
-            If the -ChinaRegion parameter is specified, then Windows Azure Datacenter IP Ranges in China is downloaded.
+            The region to be download is selected via the -Region parameter.
        
             It should be noted that this file is updated on a weekly basis, so if you save these file, then you should re-download them on a regular basis.
         
@@ -27,11 +27,11 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
             Dowloads the Microsoft Azure Datacenter IP Ranges file to C:\Temp\AzureRanges.xml
 
             .EXAMPLE
-            C:\PS> Get-MicrosoftAzureDatacenterIPRangeFile -ChinaRegion
+            C:\PS> Get-MicrosoftAzureDatacenterIPRangeFile -Region China
              Returns an XML document from the Microsoft Azure Datacenter IP Ranges in China file
 
             .EXAMPLE
-            C:\PS> Get-MicrosoftAzureDatacenterIPRangeFile -ChinaRegion -Path C:\Temp\AzureRangesChina.xml
+            C:\PS> Get-MicrosoftAzureDatacenterIPRangeFile -Region China -Path C:\Temp\AzureRangesChina.xml
             Downloads the Microsoft Azure Datacenter IP Ranges in China file to C:\Temp\AzureRangesChina.xml
             
             .OUTPUTS
@@ -51,24 +51,32 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
         [String]
         $Path,
 
-        # Download China Region File
-        [Parameter(Mandatory        = $false,
-                   Position         = 1)]
-        [Switch]
-        $ChinaRegion
+        # Specifies which region file to download, Standard, China or Germany.
+        [Parameter(Mandatory = $false,
+                   Position  = 1)]
+        [ValidateNotNullOrEmpty()]
+        [ValidateSet('Standard', 'China', 'Germany')]
+        [string]
+        $Region = 'Standard'
     )
 
-    if ($PSBoundParameters.ContainsKey('ChinaRegion') -and $ChinaRegion)
-    {   
-        Write-Verbose -Message 'Downloading... Windows Azure Datacenter IP Ranges in China'
-        $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=42064'
+    switch ($Region) {
+        'China' {
+            Write-Verbose -Message 'Downloading... Windows Azure Datacenter IP Ranges in China'
+            $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=42064'
+        }
+
+        'Germany' {
+            Write-Verbose -Message 'Downloading... Windows Azure Datacenter IP Ranges in Germany'
+            $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=54770'
+        }
+
+        Default {
+            Write-Verbose -Message 'Downloading... Microsoft Azure Datacenter IP Ranges'
+            $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=41653'
+        }
     }
-    else
-    {
-        Write-Verbose -Message 'Downloading... Microsoft Azure Datacenter IP Ranges'
-        $MicrosoftDownloadsURL = 'https://www.microsoft.com/en-us/download/confirmation.aspx?id=41653'
-    }
-        
+       
     $DownloadPage = Invoke-WebRequest -UseBasicParsing -Uri $MicrosoftDownloadsURL
     $DownloadLink = ($DownloadPage.Links | Where-Object -FilterScript {$_.outerHTML -match 'Click here' -and $_.href -match '.xml'}).href[0]
         
