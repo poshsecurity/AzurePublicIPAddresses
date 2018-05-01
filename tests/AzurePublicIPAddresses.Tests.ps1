@@ -1,16 +1,7 @@
-﻿Import-Module $PSScriptRoot\AzurePublicIPAddresses.psm1 -Force
+﻿Import-Module $PSScriptRoot\..\AzurePublicIPAddresses.psm1 -Force
 
 
 Describe 'AzurePublicIPAddresses' {
-    Context 'Script Analyzer' {
-        It 'Does not have any issues with the Script Analyser - Get-MicrosoftAzureDatacenterIPRange' {
-            Invoke-ScriptAnalyzer $PSScriptRoot\Functions\Get-MicrosoftAzureDatacenterIPRange.ps1 | Should be $null
-        }
-        It 'Does not have any issues with the Script Analyser - Get-MicrosoftAzureDatacenterIPRangeFile' {
-            Invoke-ScriptAnalyzer $PSScriptRoot\Functions\Get-MicrosoftAzureDatacenterIPRangeFile.ps1 | Should be $null
-        }
-    }
-
     Context 'Get-MicrosoftAzureDatacenterIPRange Parameter validation' {
         It 'throws an error for an invalid region is specified' {
             {Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'nomansland'} | should throw
@@ -202,6 +193,31 @@ Describe 'AzurePublicIPAddresses' {
 
         It 'returns output for Germany Northeast' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Germany Northeast' | Should not be $null
+        }
+
+        It 'returns output for Australia Central' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia Central' | Should not be $null
+        }
+
+        It 'returns output for Australia Central 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia Central 2' | Should not be $null
+        }
+
+        It 'returns output for UK North' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK North' | Should not be $null
+        }
+
+        It 'returns output for UK South 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK South 2' | Should not be $null
+        }
+
+        # Placeholder tests
+        It 'returns output for North Europe 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Europe 2' | Should not be $null
+        }
+
+        It 'returns output for East Europe' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East Europe' | Should not be $null
         }
 
         It 'accepts an Azure region from the pipeline' {

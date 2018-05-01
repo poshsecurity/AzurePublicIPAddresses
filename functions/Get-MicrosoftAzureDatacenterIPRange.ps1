@@ -1,13 +1,13 @@
 #requires -Version 4.0
-function Get-MicrosoftAzureDatacenterIPRange  
+function Get-MicrosoftAzureDatacenterIPRange
 {
     <#
             .SYNOPSIS
             Gets the IP ranges associated with Azure regions in CIDR format.
 
             .DESCRIPTION
-            The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). You can get the ranges for a specific region, or get all subnets for all regions. 
-            
+            The Get-MicrosoftAzureDatacenterIPRange cmdlet gets a list of subnets in CIDR format (eg 192.168.1.0/24). You can get the ranges for a specific region, or get all subnets for all regions.
+
             There are three files that contain all the information that this CMDLet uses:
                 Microsoft Azure Datacenter IP Ranges file (https://www.microsoft.com/en-us/download/details.aspx?id=41653)
                 Windows Azure Datacenter IP Ranges in China (https://www.microsoft.com/en-us/download/details.aspx?id=42064)
@@ -19,7 +19,7 @@ function Get-MicrosoftAzureDatacenterIPRange
             as it checks to see if the file has already been stored in memory.
 
             If you specify -path, the CMDLet will generate warnings that not all regions will be available. This is by design. I will look at handling both files saved to the file system in a later release.
-            
+
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Central US'
             Returns all of the subnets in the North Central US regions, will download the Microsoft Azure Datacenter IP Ranges file into memory
@@ -31,78 +31,84 @@ function Get-MicrosoftAzureDatacenterIPRange
             .EXAMPLE
             C:\PS> @('Japan West', 'Japan East') | Get-MicrosoftAzureDatacenterIPRange
             Returns all of the subnets in the Japan West and East regions, will download the Microsoft Azure Datacenter IP Ranges file into memory
-            
+
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange -Path C:\Temp\AzureRanges.xml -AzureRegion 'North Central US'
             Returns all of the subnets in the North Central US region based on the specified file
-            
+
             .EXAMPLE
             C:\PS> Get-MicrosoftAzureDatacenterIPRange
             Returns all of the subnets used by Azure, will download the Microsoft Azure Datacenter IP Ranges file into memory
-            
+
             .INPUTS
             Can take Azure region names from the pipeline.
-            
+
             .OUTPUTS
             Outputs objects containing each subnet and their region.
     #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
-    param(              
+    param(
         # Azure Datacenter/region
-        [Parameter(Mandatory         = $false, 
-                   Position          = 0, 
+        [Parameter(Mandatory         = $false,
+                   Position          = 0,
                    ValueFromPipeline = $true)]
         [ValidateSet(
-                'West Europe',
-                'East US',
-                'East US 2',
-                'West US',
-                'North Central US',
-                'North Europe',
-                'Central US',
-                'East Asia',
-                'Southeast Asia',
-                'South Central US',
-                'Japan West',
-                'Japan East',
-                'Brazil South',
-                'Australia East',
-                'Australia Southeast',
-                'Central India',
-                'West India',
-                'South India',
-                'Canada Central',
-                'Canada East',
-                'West Central US',
-                'West US 2',
-                'UK South',
-                'UK West',
-                'China North',
-                'China East',
-                'Central US EUAP',
-                'East US 2 EUAP',
-                'Korea South',
-                'Korea Central',
-                'France Central',
-                'France South',
-                'Germany Central',
-                'Germany Northeast'
+            'Australia Central',
+            'Australia Central 2',
+            'Australia East',
+            'Australia Southeast',
+            'Brazil South',
+            'Canada Central',
+            'Canada East',
+            'Central India',
+            'Central US EUAP',
+            'Central US',
+            'China East',
+            'China North',
+            'East Asia',
+            'East US 2 EUAP',
+            'East US 2',
+            'East US',
+            'France Central',
+            'France South',
+            'Germany Central',
+            'Germany Northeast',
+            'Japan East',
+            'Japan West',
+            'Korea Central',
+            'Korea South',
+            'North Central US',
+            'North Europe',
+            'South Central US',
+            'South India',
+            'Southeast Asia',
+            'UK North',
+            'UK South',
+            'UK South 2',
+            'UK West',
+            'West Central US',
+            'West Europe',
+            'West India',
+            'West US 2',
+            'West US',
+            'North Europe 2', #Placeholder until azure region name is confirmed
+            'East Europe'     #Placeholder until azure region name is confirmed
         )]
         [ValidateNotNullOrEmpty()]
         [String[]]
         $AzureRegion,
-        
+
         # Path to Microsoft Azure Datacenter IP Ranges file
-        [Parameter(Mandatory = $false, 
+        [Parameter(Mandatory = $false,
                    Position  = 1)]
         [ValidateNotNullOrEmpty()]
         [ValidateScript({Test-Path -Path $_ -PathType Leaf})]
         [String]
         $Path
     )
-    
-    begin 
+
+    begin
     {
         if ($PSBoundParameters.ContainsKey('path'))
         {
@@ -113,11 +119,11 @@ function Get-MicrosoftAzureDatacenterIPRange
             # Display warning stating that some regions may not be available
             Write-Warning -Message 'Using -Path may result in some regions being unavailable and returning no values.'
         }
-        else 
+        else
         {
             if ($null -eq $Script:Regions)
             {
-                Write-Verbose -Message 'Fetching the standard region data file'        
+                Write-Verbose -Message 'Fetching the standard region data file'
                 $Script:Regions = (Get-MicrosoftAzureDatacenterIPRangeFile).AzurePublicIpAddresses.Region
 
                 Write-Verbose -Message 'Fetching the China region file'
@@ -160,14 +166,20 @@ function Get-MicrosoftAzureDatacenterIPRange
             'East US 2 EUAP'      = 'useast2euap'
             'Korea South'         = 'koreasouth'
             'Korea Central'       = 'koreacentral'
-            'France Central'      = "francec"
-            'France South'        = "frances"
-            'Germany Central'     = "germanycentral"
-            'Germany Northeast'   = "germanynortheast"
+            'France Central'      = 'francec'
+            'France South'        = 'frances'
+            'Germany Central'     = 'germanycentral'
+            'Germany Northeast'   = 'germanynortheast'
+            'Australia Central'   = 'australiac'
+            'Australia Central 2' = 'australiac2'
+            'UK North'            = 'uknorth'
+            'UK South 2'          = 'uksouth2'
+            'North Europe 2'      = 'europenorth2' #Placeholder until azure region name is confirmed
+
         }
     }
-    
-    process 
+
+    process
     {
         # Are we selecting a specific region or returing all subnets?
         if ($PSBoundParameters.ContainsKey('AzureRegion'))
@@ -178,9 +190,9 @@ function Get-MicrosoftAzureDatacenterIPRange
                 # Translate the friendly region name to the backend names
                 $BackendRegionName = $AzureRegions[$Region]
 
-                Write-Verbose -Message "Backend region $BackendRegionName"
+                Write-Verbose -Message "Backend region: $BackendRegionName"
                 $Subnets = ($Regions.where({$_.name -eq $BackendRegionName})).iprange.subnet
-                foreach ($Subnet in $Subnets) 
+                foreach ($Subnet in $Subnets)
                 {
                     $OutputObject = [PSCustomObject]@{
                         Region = $Region
@@ -188,24 +200,29 @@ function Get-MicrosoftAzureDatacenterIPRange
                     }
                     Write-Output -InputObject $OutputObject
                 }
-            }            
+            }
         }
-        else 
+        else
         {
-            foreach ($Region in $Regions) 
+            foreach ($Region in $Regions)
             {
                 $BackendRegionName = $Region.Name
-                
+
+                Write-Verbose -Message "Backend region: $BackedRegionName"
+
                 # Translate each region name to something friendly
-                $AzureRegion = $AzureRegions.GetEnumerator().Where({$_.Value -eq $BackendRegionName}).Name
-                                
-                Write-Verbose -Message "Azure Region Name $AzureRegion"
-                
+                $RegionName = $AzureRegions.GetEnumerator().Where({$_.Value -eq $BackendRegionName}).Name
+                if ($null -eq $RegionName) {
+                    Write-Warning -Message "Could not find Azure Region: $BackendRegionName"
+                }
+
+                Write-Verbose -Message "Azure Region Name: $RegionName"
+
                 # Create the output object
-                foreach ($Subnet in $Region.IpRange) 
+                foreach ($Subnet in $Region.IpRange)
                 {
                     $OutputObject = [PSCustomObject]@{
-                        Region = $AzureRegion
+                        Region = $RegionName
                         Subnet = $Subnet.Subnet
                     }
                     Write-Output -InputObject $OutputObject
