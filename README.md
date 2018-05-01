@@ -1,6 +1,6 @@
 # AzurePublicIPAddresses
 
-![Build Status](https://build.status.url.here)
+![Build Status](https://poshsecurity.visualstudio.com/_apis/public/build/definitions/3d8291e9-888c-4ff2-8223-f7eefdabecb7/3/badge)
 
 ## Description
 
@@ -10,7 +10,7 @@ Authored by Kieran Jacobsen
 
 ## Installing
 
-The easiest way to get AzurePublicIPAddresses is using the [PowerShell Gallery](https://powershellgallery.com/packages/<%= $PLASTER_PARAM_ModuleName %>/)!
+The easiest way to get AzurePublicIPAddresses is using the [PowerShell Gallery](https://powershellgallery.com/packages/AzurePublicIPAddresses/)!
 
 ### Inspecting the module
 
