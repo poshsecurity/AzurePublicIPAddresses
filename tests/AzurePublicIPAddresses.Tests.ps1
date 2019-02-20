@@ -220,6 +220,12 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East Europe' | Should not be $null
         }
 
+        <# As there are no IP addresses, so disable these tests.
+        It 'returns output for Korea South 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South 2' | Should not be $null
+        }
+        #>
+
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
         }

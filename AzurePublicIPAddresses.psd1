@@ -12,7 +12,7 @@
     RootModule = 'AzurePublicIPAddresses.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.0'
+    ModuleVersion = '1.0.1'
 
     # ID used to uniquely identify this module
     GUID = 'c8dbd0e3-529d-4bba-976a-5cd7560c70c0'
@@ -63,7 +63,7 @@
     # FormatsToProcess = @()
 
     # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
-    # NestedModules = 
+    # NestedModules =
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
     FunctionsToExport = @('Get-MicrosoftAzureDatacenterIPRange', 'Get-MicrosoftAzureDatacenterIPRangeFile')
@@ -104,7 +104,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Support for Australia Central, Australia Central 2, UK North, UK South 2, and placeholders North Europe 2 and East Europe'
+            ReleaseNotes = 'Support for Korea South 2'
 
         } # End of PSData hashtable
 
