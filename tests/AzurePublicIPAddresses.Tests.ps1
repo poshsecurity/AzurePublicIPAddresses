@@ -1,6 +1,5 @@
 ﻿Import-Module $PSScriptRoot\..\AzurePublicIPAddresses.psm1 -Force
 
-
 Describe 'AzurePublicIPAddresses' {
     Context 'Get-MicrosoftAzureDatacenterIPRange Parameter validation' {
         It 'throws an error for an invalid region is specified' {
@@ -223,6 +222,24 @@ Describe 'AzurePublicIPAddresses' {
         <# As there are no IP addresses, so disable these tests.
         It 'returns output for Korea South 2' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South 2' | Should not be $null
+        }
+        #>
+
+        <# As there are no IP addresses, so disable these tests.
+        It 'returns output for Korea South 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Southeast' | Should not be $null
+        }
+        #>
+
+        <# As there are no IP addresses, so disable these tests.
+        It 'returns output for Korea South 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Northeast' | Should not be $null
+        }
+        #>
+
+        <# As there are no IP addresses, so disable these tests.
+        It 'returns output for Korea South 2' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Chile Central' | Should not be $null
         }
         #>
 
