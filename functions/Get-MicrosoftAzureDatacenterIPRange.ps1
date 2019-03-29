@@ -97,7 +97,9 @@ function Get-MicrosoftAzureDatacenterIPRange
             'Korea South 2',    #Placeholder until azure region name is confirmed
             'Brazil Southeast', #Placeholder until azure region name is confirmed
             'Brazil Northeast', #Placeholder until azure region name is confirmed
-            'Chile Central'    #Placeholder until azure region name is confirmed
+            'Chile Central',    #Placeholder until azure region name is confirmed
+            'South Africa North',
+            'South Africa West'
         )]
         [ValidateNotNullOrEmpty()]
         [String[]]
@@ -184,6 +186,8 @@ function Get-MicrosoftAzureDatacenterIPRange
             'Brazil Southeast'    = 'brazilse' #Placeholder until azure region name is confirmed
             'Brazil Northeast'    = 'brazilne' #Placeholder until azure region name is confirmed
             'Chile Central'       = 'chilec' #Placeholder until azure region name is confirmed
+            'South Africa North'  = 'southafrican'
+            'South Africa West'   = 'southafricaw'
         }
     }
 
