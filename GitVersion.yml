@@ -1,3 +1,3 @@
 next-version: 1.0.2
 mode: mainline
-continuous-delivery-fallback-tag: '***NO_CI***'
+no-bump-message: '\+semver:\s?(NO_CI|none|skip)'
