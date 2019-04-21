@@ -12,7 +12,7 @@
     RootModule = 'AzurePublicIPAddresses.psm1'
 
     # Version number of this module.
-    ModuleVersion = '1.0.9'
+    ModuleVersion = '1.0.11'
 
     # ID used to uniquely identify this module
     GUID = 'c8dbd0e3-529d-4bba-976a-5cd7560c70c0'
@@ -117,6 +117,7 @@
     # DefaultCommandPrefix = ''
 
 }
+
 
 
 
