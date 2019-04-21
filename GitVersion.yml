@@ -1,3 +1,2 @@
-next-version: 1.0.2
 mode: mainline
-no-bump-message: '\+semver:\s?(NO_CI|none|skip)'
+no-bump-message: '\s?NO_CI'
