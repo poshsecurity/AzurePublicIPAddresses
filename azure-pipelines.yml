@@ -67,6 +67,7 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - powershell: |
    git config user.email 'noreply@dev.azure.com'
