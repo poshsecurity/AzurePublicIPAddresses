@@ -67,7 +67,6 @@ steps:
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - powershell: |
    git config user.email 'noreply@dev.azure.com'
@@ -88,6 +87,7 @@ steps:
 
 - powershell: 'Publish-Module -Path $(build.artifactstagingdirectory)\$(Build.DefinitionName) -NuGetAPIKey $(PowerShellGalleryNuGet)'
   displayName: 'PowerShell Script'
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
 - task: ArchiveFiles@2
   displayName: 'Create Zip'
