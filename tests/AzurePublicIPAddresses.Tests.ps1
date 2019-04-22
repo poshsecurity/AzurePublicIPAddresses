@@ -238,7 +238,7 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Chile Central' | Should not be $null
         }
         #>
-        
+
         It 'returns output for South Africa North' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Africa North' | Should not be $null
         }
