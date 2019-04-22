@@ -1,6 +1,6 @@
 # AzurePublicIPAddresses
 
-![Build Status](https://poshsecurity.visualstudio.com/_apis/public/build/definitions/3d8291e9-888c-4ff2-8223-f7eefdabecb7/3/badge)
+[![Build Status](https://poshsecurity.visualstudio.com/PowerShell/_apis/build/status/AzurePublicIPAddresses?branchName=master)](https://poshsecurity.visualstudio.com/PowerShell/_build/latest?definitionId=36&branchName=master)
 
 ## Description
 
