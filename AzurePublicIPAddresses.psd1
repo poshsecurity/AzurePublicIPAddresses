@@ -104,7 +104,7 @@
             # IconUri = ''
 
             # ReleaseNotes of this module
-            ReleaseNotes = 'Support for Korea South 2'
+            # ReleaseNotes = ''
 
         } # End of PSData hashtable
 
