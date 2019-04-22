@@ -219,29 +219,41 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East Europe' | Should not be $null
         }
 
-        <# As there are no IP addresses, so disable these tests.
+        <# No addresses associated
         It 'returns output for Korea South 2' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South 2' | Should not be $null
         }
         #>
 
-        <# As there are no IP addresses, so disable these tests.
-        It 'returns output for Korea South 2' {
+        It 'returns output for Brazil Southeast' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Southeast' | Should not be $null
         }
-        #>
 
-        <# As there are no IP addresses, so disable these tests.
-        It 'returns output for Korea South 2' {
+        It 'returns output for Brazil Northeast' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Northeast' | Should not be $null
         }
-        #>
 
-        <# As there are no IP addresses, so disable these tests.
-        It 'returns output for Korea South 2' {
+        <# No addresses associated
+        It 'returns output for Chile Central' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Chile Central' | Should not be $null
         }
         #>
+        
+        It 'returns output for South Africa North' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Africa North' | Should not be $null
+        }
+
+        It 'returns output for South Africa West' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Africa West' | Should not be $null
+        }
+
+        It 'returns output for UAE North' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UAE North' | Should not be $null
+        }
+
+        It 'returns output for UAE Central' {
+            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UAE Central' | Should not be $null
+        }
 
         It 'accepts an Azure region from the pipeline' {
             {'West US 2' | Get-MicrosoftAzureDatacenterIPRange} | Should not be $null
