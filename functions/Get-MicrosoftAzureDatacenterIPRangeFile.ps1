@@ -60,6 +60,8 @@ function Get-MicrosoftAzureDatacenterIPRangeFile
         $Region = 'Standard'
     )
 
+    Write-Warning -Message '[Deprecation Notice] This file will be deprecated by June 30, 2020. Please switch to the JSON Azure Tags file or the Azure AZ module.'
+
     switch ($Region) {
         'China' {
             Write-Verbose -Message 'Downloading... Windows Azure Datacenter IP Ranges in China'
