@@ -92,12 +92,6 @@ function Get-MicrosoftAzureDatacenterIPRange
             'West India',
             'West US 2',
             'West US',
-            'North Europe 2',  #Placeholder until azure region name is confirmed
-            'East Europe',     #Placeholder until azure region name is confirmed
-            'Korea South 2',    #Placeholder until azure region name is confirmed
-            'Brazil Southeast', #Placeholder until azure region name is confirmed
-            'Brazil Northeast', #Placeholder until azure region name is confirmed
-            'Chile Central',    #Placeholder until azure region name is confirmed
             'South Africa North',
             'South Africa West',
             'UAE North',
@@ -188,12 +182,6 @@ function Get-MicrosoftAzureDatacenterIPRange
             'Australia Central 2'  = 'australiac2'
             'UK North'             = 'uknorth'
             'UK South 2'           = 'uksouth2'
-            'North Europe 2'       = 'europenorth2' #Placeholder until azure region name is confirmed
-            'East Europe'          = 'europeeast' #Placeholder until azure region name is confirmed
-            'Korea South 2'        = 'koreas2' #Placeholder until azure region name is confirmed
-            'Brazil Southeast'     = 'brazilse' #Placeholder until azure region name is confirmed
-            'Brazil Northeast'     = 'brazilne' #Placeholder until azure region name is confirmed
-            'Chile Central'        = 'chilec' #Placeholder until azure region name is confirmed
             'South Africa North'   = 'southafrican'
             'South Africa West'    = 'southafricaw'
             'UAE North'            = 'uaen'

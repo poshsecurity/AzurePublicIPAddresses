@@ -8,6 +8,10 @@
 * Please look at the Service Tags files or the Az module.
 * Added new regions.
 
+### Removed
+
+* Removed regions that no longer exist
+
 ## 1.0 - 2018-05-01
 
 ### Fixed

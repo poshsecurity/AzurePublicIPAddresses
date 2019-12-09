@@ -62,197 +62,61 @@ Describe 'AzurePublicIPAddresses' {
             Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West Europe' | Should not be $null
         }
 
-        It 'returns output for East US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US'| Should not be $null
-        }
+        $regions = @(
+            'Australia Central',
+            'Australia Central 2',
+            'Australia East',
+            'Australia Southeast',
+            'Brazil South',
+            'Canada Central',
+            'Canada East',
+            'Central India',
+            'Central US EUAP',
+            'Central US',
+            'China East',
+            'China North',
+            'East Asia',
+            'East US 2 EUAP',
+            'East US 2',
+            'East US',
+            'France Central',
+            'France South',
+            'Germany Central',
+            'Germany Northeast',
+            'Japan East',
+            'Japan West',
+            'Korea Central',
+            'Korea South',
+            'North Central US',
+            'North Europe',
+            'South Central US',
+            'South India',
+            'Southeast Asia',
+            'UK North',
+            'UK South',
+            'UK South 2',
+            'UK West',
+            'West Central US',
+            'West Europe',
+            'West India',
+            'West US 2',
+            'West US',
+            'South Africa North',
+            'South Africa West',
+            'UAE North',
+            'UAE Central',
+            'Germany North',
+            'Germany West Central',
+            'Norway East',
+            'Norway West',
+            'Switzerland North',
+            'Switzerland West'
+        )
 
-        It 'returns output for East US 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US 2' | Should not be $null
-        }
-
-        It 'returns output for West US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West US' | Should not be $null
-        }
-
-        It 'returns output for North Central US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Central US' | Should not be $null
-        }
-
-        It 'returns output for North Europe' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Europe' | Should not be $null
-        }
-
-        It 'returns output for Central US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Central US' | Should not be $null
-        }
-
-        It 'returns output for East Asia' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East Asia' | Should not be $null
-        }
-
-        It 'returns output for Southeast Asia' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Southeast Asia' | Should not be $null
-        }
-
-        It 'returns output for South Central US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Central US' | Should not be $null
-        }
-
-        It 'returns output for Japan West' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Japan West' | Should not be $null
-        }
-
-        It 'returns output for Japan East' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Japan East' | Should not be $null
-        }
-
-        It 'returns output for Brazil South' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil South' | Should not be $null
-        }
-
-        It 'returns output for Australia East' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia East' | Should not be $null
-        }
-
-        It 'returns output for Australia Southeast' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia Southeast' | Should not be $null
-        }
-
-        It 'returns output for Central India' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Central India' | Should not be $null
-        }
-
-        It 'returns output for West India' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West India' | Should not be $null
-        }
-
-        It 'returns output for South India' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South India' | Should not be $null
-        }
-
-        It 'returns output for Canada Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Canada Central' | Should not be $null
-        }
-
-        It 'returns output for Canada East' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Canada East' | Should not be $null
-        }
-
-        It 'returns output for West Central US' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West Central US' | Should not be $null
-        }
-
-        It 'returns output for West US 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'West US 2' | Should not be $null
-        }
-
-        It 'returns output for UK South' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK South' | Should not be $null
-        }
-
-        It 'returns output for UK West' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK West' | Should not be $null
-        }
-
-        It 'returns output for China North' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China North' | Should not be $null
-        }
-
-        It 'returns output for China East' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'China East' | Should not be $null
-        }
-
-        It 'returns output for Central US EUAP' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Central US EUAP' | Should not be $null
-        }
-
-        It 'returns output for East US 2 EUAP' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US 2 EUAP' | Should not be $null
-        }
-
-        It 'returns output for Korea South' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South' | Should not be $null
-        }
-
-        It 'returns output for Korea Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea Central' | Should not be $null
-        }
-
-        It 'returns output for France South' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'France South' | Should not be $null
-        }
-
-        It 'returns output for France Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'France Central' | Should not be $null
-        }
-
-        It 'returns output for Germany Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Germany Central' | Should not be $null
-        }
-
-        It 'returns output for Germany Northeast' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Germany Northeast' | Should not be $null
-        }
-
-        It 'returns output for Australia Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia Central' | Should not be $null
-        }
-
-        It 'returns output for Australia Central 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Australia Central 2' | Should not be $null
-        }
-
-        It 'returns output for UK North' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK North' | Should not be $null
-        }
-
-        It 'returns output for UK South 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UK South 2' | Should not be $null
-        }
-
-        # Placeholder tests
-        It 'returns output for North Europe 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'North Europe 2' | Should not be $null
-        }
-
-        It 'returns output for East Europe' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East Europe' | Should not be $null
-        }
-
-        <# No addresses associated
-        It 'returns output for Korea South 2' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Korea South 2' | Should not be $null
-        }
-        #>
-
-        It 'returns output for Brazil Southeast' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Southeast' | Should not be $null
-        }
-
-        It 'returns output for Brazil Northeast' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Brazil Northeast' | Should not be $null
-        }
-
-        <# No addresses associated
-        It 'returns output for Chile Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'Chile Central' | Should not be $null
-        }
-        #>
-
-        It 'returns output for South Africa North' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Africa North' | Should not be $null
-        }
-
-        It 'returns output for South Africa West' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'South Africa West' | Should not be $null
-        }
-
-        It 'returns output for UAE North' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UAE North' | Should not be $null
-        }
-
-        It 'returns output for UAE Central' {
-            Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'UAE Central' | Should not be $null
+        foreach ($region in $regions) {
+            It "returns output for $region" {
+                Get-MicrosoftAzureDatacenterIPRange -AzureRegion 'East US'| Should not be $null
+            }
         }
 
         It 'accepts an Azure region from the pipeline' {
