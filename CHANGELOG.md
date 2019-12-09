@@ -1,16 +1,24 @@
 # AzurePublicIPAddresses Release History
 
-## 1.11 - 2019-12-09
+## 1.0.14 - 2019-04-22
+
 
 ### Added
+* Support for UAE regions.
+* Additional test cases.
 
-* Added deprectation notice to module.
-* Please look at the Service Tags files or the Az module.
-* Added new regions.
+## 1.0.11 - 2019-04-21
 
-### Removed
 
-* Removed regions that no longer exist
+### Added
+* Added support for South African, Chile and Brazil regions.
+* New CI processs including GitVersion and YML build.
+
+
+## 1.0.1 - 2019-03-24
+## Added
+* Includes support for Korean regions.
+
 
 ## 1.0 - 2018-05-01
 
