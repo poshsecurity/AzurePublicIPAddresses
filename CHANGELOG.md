@@ -1,5 +1,13 @@
 # AzurePublicIPAddresses Release History
 
+## 1.11 - 2019-12-09
+
+### Added
+
+* Added deprectation notice to module.
+* Please look at the Service Tags files or the Az module.
+* Added new regions.
+
 ## 1.0 - 2018-05-01
 
 ### Fixed
