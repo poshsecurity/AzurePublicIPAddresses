@@ -2,23 +2,23 @@
 
 ## 1.0.14 - 2019-04-22
 
-
 ### Added
+
 * Support for UAE regions.
 * Additional test cases.
 
 ## 1.0.11 - 2019-04-21
 
-
 ### Added
+
 * Added support for South African, Chile and Brazil regions.
 * New CI processs including GitVersion and YML build.
 
-
 ## 1.0.1 - 2019-03-24
-## Added
-* Includes support for Korean regions.
 
+## Added
+
+* Includes support for Korean regions.
 
 ## 1.0 - 2018-05-01
 
