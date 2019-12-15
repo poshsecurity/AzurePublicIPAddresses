@@ -52,7 +52,7 @@ steps:
   workingDirectory: '$(build.artifactstagingdirectory)'
   displayName: 'Get Pester, PSScriptAnalyser, InjectionHunter '
 
-- task: richardfennellBM.BM-VSTS-PesterRunner-Task.Pester-Task.Pester@8
+- task: Pester@8
   displayName: 'Run Pester'
   inputs:
     scriptFolder: '$(build.artifactstagingdirectory)\$(Build.DefinitionName)\*'
